@@ -10,16 +10,11 @@ fun setWordsToBong(words: MutableList<String>) {
 }
 
 fun insertFezz(words: MutableList<String>) {
-    var inserted = false
-    for (i in words.indices) {
-        if (words[i][0] == 'B') {
-            words.add(i, "Fezz")
-            inserted = true
-            break
-        }
-    }
-    if (!inserted) {
+    val index = words.indexOfFirst { it.startsWith('B') }
+    if (index == -1) {
         words.add("Fezz")
+    } else {
+        words.add(index, "Fezz")
     }
 }
 
@@ -28,21 +23,13 @@ fun reverseWords(words: MutableList<String>) {
 }
 
 fun printNumOrWords(num: Int, words: MutableList<String>) {
-    var combined = ""
-    if (words.isEmpty()) {
-        println(num)
-    } else {
-        for (word in words) {
-            combined += word
-        }
-        println(combined)
-    }
+    println( if(words.isEmpty()) num else words.joinToString("") )
 }
 
 fun main() {
-    val words = mutableListOf<String>()
-
     for (num in 1..100) {
+        val words = mutableListOf<String>()
+
         if (num % 3 == 0) {
             addWord(words, "Fizz")
         }
@@ -64,7 +51,6 @@ fun main() {
         }
 
         printNumOrWords(num, words)
-        words.clear()
 
     }
 }
